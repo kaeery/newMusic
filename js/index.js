@@ -42,46 +42,49 @@ ul.appendChild(newli);
 //右箭头
 var num = 0;
 var numC = 0;
-var flag=true;
+var flag = true;
 console.log(ul.children.length)
-next.addEventListener('click', function () {
-    if(flag){
-        flag=false;
-            //图片和小圆圈一起切换
-    numC++;
-    if (numC == 5) {
-        numC = 0;
-    }
-    for (var i = 0; i < circle.children.length; i++) {
-        circle.children[i].className = ''
-    }
-    circle.children[numC].className = 'current';
-    //无缝轮播  
-    if (num == ul.children.length - 1) {
-        ul.style.left = 0;
-        num = 0;
-    }
-    num++;
-    animate(ul, -num * focus.offsetWidth,function(){
-        flag=true;
-    });
+next.addEventListener('click', slide)
+
+function slide() {
+    if (flag) {
+        flag = false;
+        //图片和小圆圈一起切换
+        numC++;
+        if (numC == 5) {
+            numC = 0;
+        }
+        for (var i = 0; i < circle.children.length; i++) {
+            circle.children[i].className = ''
+        }
+        circle.children[numC].className = 'current';
+        //无缝轮播  
+        if (num == ul.children.length - 1) {
+            ul.style.left = 0;
+            num = 0;
+        }
+        num++;
+        animate(ul, -num * focus.offsetWidth, function () {
+            flag = true;
+        });
 
     }
-})
+
+}
 
 //左箭头
 prev.addEventListener('click', function () {
-    if(flag){
-        flag=false;
+    if (flag) {
+        flag = false;
         if (num == 0) {
             ul.style.left = (ul.children.length - 1) * focus.offsetWidth;
             num = ul.children.length - 1; //跳到最后一张图片
-    
+
         }
         num--;
         console.log(focus.offsetWidth);
-        animate(ul, -num * focus.offsetWidth,function(){
-            flag=true;
+        animate(ul, -num * focus.offsetWidth, function () {
+            flag = true;
         })
         //图片与小圆圈一起切换
         numC--;
@@ -92,22 +95,22 @@ prev.addEventListener('click', function () {
             circle.children[i].className = '';
         }
         circle.children[numC].className = 'current';
-    
+
     }
 })
 //自动播放
 var timer = setInterval(function () {
-    next.click();
-}, 2000)
+    slide();
+}, 5000)
 
-//鼠标移入停止播放
-focus.addEventListener('mousemove', function () {
-    clearInterval(timer);
-    timer = null;
-})
-//鼠标移出停止播放
-focus.addEventListener('mouseleave', function () {
-    timer = setInterval(function () {
-        next.click();
-    }, 2000)
-})
+// //鼠标移入停止播放
+// focus.addEventListener('mousemove', function () {
+//     clearInterval(timer);
+//     timer = null;
+// })
+// //鼠标移出停止播放
+// focus.addEventListener('mouseleave', function () {
+//     timer = setInterval(function () {
+//         slide();
+//     }, 2000)
+// })
