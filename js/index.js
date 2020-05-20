@@ -45,22 +45,25 @@ var numC = 0;
 console.log(ul.children.length)
 next.addEventListener('click', function () {
         //图片和小圆圈一起切换
-        if (num == ul.children.length-1) {
-            ul.style.left = 0;
-            num = 0;
-        }
+        // if (num == ul.children.length-1) {
+        //     ul.style.left = 0;
+        //     num = 0;
+        // }
 
         //无缝轮播  
+        if(num===4) {
+            ul.style.left=0;
+            num=-1;
+        }
         num++;
         animate(ul, -num * focus.offsetWidth);
-        numC++;
-        if(numC==5) {
-            numC=0;
-        }
+        // if(numC==5) {
+        //     numC=0;
+        // }
         for (var i = 0; i < circle.children.length; i++) {
             circle.children[i].className = ''
         }
-        circle.children[numC].className = 'current';
+        circle.children[num].className = 'current';
 
 
     }
@@ -92,6 +95,18 @@ prev.addEventListener('click', function () {
 )
 //自动播放
 var timer = setInterval(function () {
+    if(num===4) {
+        ul.style.left=0;
+        num=-1;
+    }
+    num++;
+    animate(ul,-num * focus.offsetWidth);
+    for (var i = 0; i < circle.children.length; i++) {
+        circle.children[i].className = ''
+    }
+    circle.children[num].className = 'current';
+
+
 }, 5000)
 
 // //鼠标移入停止播放
